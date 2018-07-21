@@ -11,7 +11,7 @@ import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_porfolio_header.*
 
-class PortfolioHeaderDelegate(activity: Activity) : AbsListItemAdapterDelegate<HeaderItem, PortfolioDisplayableItem, PortfolioHeaderDelegate.HeaderViewHolder>() {
+class HeaderDelegate(activity: Activity) : AbsListItemAdapterDelegate<HeaderItem, PortfolioDisplayableItem, HeaderDelegate.HeaderViewHolder>() {
     private val inflater = activity.layoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup) =

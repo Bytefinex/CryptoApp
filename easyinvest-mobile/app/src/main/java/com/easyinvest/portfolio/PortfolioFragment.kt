@@ -9,6 +9,7 @@ import com.easyinvest.R
 import com.easyinvest.base.BaseFragment
 import com.easyinvest.portfolio.items.HeaderItem
 import com.easyinvest.portfolio.items.PortfolioDisplayableItem
+import com.easyinvest.portfolio.items.SectionHeaderItem
 import kotlinx.android.synthetic.main.fragment_portfolio.*
 
 
@@ -29,8 +30,9 @@ class PortfolioFragment : BaseFragment() {
     }
 
     private fun getViewItems(): List<PortfolioDisplayableItem> {
-        return listOf<PortfolioDisplayableItem>(
-                HeaderItem(totalAmount = "388 414,87", extraAmount = "46 888, 28")
+        return listOf(
+                HeaderItem(totalAmount = "388 414,87", extraAmount = "46 888, 28"),
+                SectionHeaderItem(title = "Following")
         )
     }
 
