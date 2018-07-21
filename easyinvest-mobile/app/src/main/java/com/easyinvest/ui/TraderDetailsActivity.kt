@@ -22,8 +22,8 @@ import com.db.chart.tooltip.Tooltip
 import com.db.chart.util.Tools
 import com.easyinvest.R
 import com.easyinvest.data.Trader
+import com.easyinvest.util.showMonthlyPercent
 import kotlinx.android.synthetic.main.trader_header.*
-import kotlin.math.absoluteValue
 
 
 private const val TRADER_KEY = "TRADER_KEY"
@@ -70,21 +70,7 @@ class TraderDetailsActivity : AppCompatActivity() {
                 .apply(RequestOptions.circleCropTransform())
                 .into(avatar)
 
-        val colorAndIcon = if (trader.profitPercentage >= 0) {
-            R.color.green to R.drawable.ic_trending_up
-        } else R.color.red to R.drawable.ic_trending_down
-
-        with(profit) {
-            setTextColor(ContextCompat.getColor(this@TraderDetailsActivity, colorAndIcon.first))
-            setCompoundDrawablesWithIntrinsicBounds(
-                    colorAndIcon.second,
-                    0,
-                    0,
-                    0
-            )
-            setTextViewDrawableColor(colorAndIcon.first)
-            text = "${trader.profitPercentage.absoluteValue}%"
-        }
+        profit.showMonthlyPercent(trader, this)
 
         profitPerMonth.visibility = if (trader.followedByCurrentInvestor) {
             View.GONE
