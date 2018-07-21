@@ -11,7 +11,7 @@ class PortfolioAdapter constructor(activity: Activity, items: List<PortfolioDisp
 
     init {
         delegatesManager.addDelegate(HeaderDelegate(activity))
-        delegatesManager.addDelegate(TraderDelegate(activity))
+        delegatesManager.addDelegate(TraderDelegate(activity, items))
         delegatesManager.addDelegate(SectionHeaderDelegate(activity))
         setItems(items)
     }
