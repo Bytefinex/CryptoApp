@@ -10,9 +10,10 @@ import com.easyinvest.R
 import com.easyinvest.base.DisplayableItem
 import com.easyinvest.portfolio.items.TraderItem
 import com.easyinvest.ui.TraderDetailsActivity
+import com.easyinvest.util.showMonthlyPercent
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_portfolio_trader.*
+import kotlinx.android.synthetic.main.item_popular_trader.*
 
 class PopularTradersDelegate(
         private val activity: Activity,
@@ -22,7 +23,7 @@ class PopularTradersDelegate(
     private val inflater = activity.layoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup) =
-            PopularTraderViewHolder(inflater.inflate(R.layout.item_portfolio_trader, parent, false))
+            PopularTraderViewHolder(inflater.inflate(R.layout.item_popular_trader, parent, false))
 
     override fun isForViewType(item: DisplayableItem, items: MutableList<DisplayableItem>, position: Int) =
             item is PopularTraderItem
@@ -50,8 +51,6 @@ class PopularTradersDelegate(
         fun bind(popularItem: PopularTraderItem) {
             val item = popularItem.item
             traderNameView.text = item.name
-            traderTotalAmountView.text = item.displayTotalAmount
-            traderExtraAmountView.text = item.displayExtraAmount
             Glide.with(itemView)
                     .load(item.avatar)
                     .apply(RequestOptions.circleCropTransform())
@@ -59,7 +58,7 @@ class PopularTradersDelegate(
 
             val isTrader = item.extraAmount != null
             containerView?.isClickable = isTrader
-            traderExtraAmountView.visibility = if (isTrader) View.VISIBLE else View.GONE
+            traderMonthlyIncome.showMonthlyPercent(item.toTrader(), itemView.context)
         }
     }
 
