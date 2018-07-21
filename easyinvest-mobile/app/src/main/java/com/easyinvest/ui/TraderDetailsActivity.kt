@@ -70,14 +70,26 @@ class TraderDetailsActivity : AppCompatActivity() {
             .apply(RequestOptions.circleCropTransform())
             .into(avatar)
 
-        val color = if (trader.profitPercentage >= 0) {
-            R.color.green
-        } else R.color.red
+        val colorAndIcon = if (trader.profitPercentage >= 0) {
+            R.color.green to R.drawable.ic_trending_up
+        } else R.color.red to R.drawable.ic_trending_down
 
         with(profit) {
-            setTextColor(ContextCompat.getColor(this@TraderDetailsActivity, color))
-            setTextViewDrawableColor(color)
-            profit.text = trader.profitPercentage.absoluteValue.toString()
+            setTextColor(ContextCompat.getColor(this@TraderDetailsActivity, colorAndIcon.first))
+            setCompoundDrawablesWithIntrinsicBounds(
+                colorAndIcon.second,
+                0,
+                0,
+                0
+            )
+            setTextViewDrawableColor(colorAndIcon.first)
+            profit.text = "${trader.profitPercentage.absoluteValue}%"
+        }
+
+        if (trader.followersCount == 0) {
+            followers.text = "has no followers"
+        } else {
+            followers.text = "${trader.followersCount} followers"
         }
 
         updateSubscribeIcon(trader.followedByCurrentInvestor)
@@ -94,16 +106,16 @@ class TraderDetailsActivity : AppCompatActivity() {
                 PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
                 PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
                 PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)
-            ).setDuration(200)
+            ).duration = 200
 
             ttooltip.setExitAnimation(
                 PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
                 PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
                 PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
-            ).setDuration(200)
+            ).duration = 200
 
-            ttooltip.setPivotX(Tools.fromDpToPx(65f) / 2)
-            ttooltip.setPivotY(Tools.fromDpToPx(25f))
+            ttooltip.pivotX = Tools.fromDpToPx(65f) / 2
+            ttooltip.pivotY = Tools.fromDpToPx(25f)
         }
 
         // Data
