@@ -6,4 +6,7 @@
     <dimen name="app_bar_height">220dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="subtitle_text_size">16sp</dimen>
+    <dimen name="extra_amount_text_size">14sp</dimen>
 </resources>
