@@ -22,6 +22,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -45,6 +49,8 @@ dependencies {
 
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'me.relex:circleindicator:1.2.2@aar'
+
+    implementation 'com.hannesdorfmann:adapterdelegates3:3.0.1'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
