@@ -33,8 +33,8 @@ fun TextView.setTextViewDrawableColor(color: Int) {
         if (drawable != null) {
             drawable.colorFilter =
                     PorterDuffColorFilter(
-                        ContextCompat.getColor(context, color),
-                        PorterDuff.Mode.SRC_IN
+                            ContextCompat.getColor(context, color),
+                            PorterDuff.Mode.SRC_IN
                     )
         }
     }
@@ -44,9 +44,9 @@ class TraderDetailsActivity : AppCompatActivity() {
 
     companion object {
         fun getIntent(context: Context, trader: Trader) =
-            Intent(context, TraderDetailsActivity::class.java).apply {
-                putExtra(TRADER_KEY, trader)
-            }
+                Intent(context, TraderDetailsActivity::class.java).apply {
+                    putExtra(TRADER_KEY, trader)
+                }
 
         private fun fromIntent(intent: Intent) = intent.extras[TRADER_KEY] as Trader
     }
@@ -66,9 +66,9 @@ class TraderDetailsActivity : AppCompatActivity() {
         name.text = trader.name
 
         Glide.with(this)
-            .load(trader.avatar)
-            .apply(RequestOptions.circleCropTransform())
-            .into(avatar)
+                .load(trader.avatar)
+                .apply(RequestOptions.circleCropTransform())
+                .into(avatar)
 
         val colorAndIcon = if (trader.profitPercentage >= 0) {
             R.color.green to R.drawable.ic_trending_up
@@ -77,13 +77,19 @@ class TraderDetailsActivity : AppCompatActivity() {
         with(profit) {
             setTextColor(ContextCompat.getColor(this@TraderDetailsActivity, colorAndIcon.first))
             setCompoundDrawablesWithIntrinsicBounds(
-                colorAndIcon.second,
-                0,
-                0,
-                0
+                    colorAndIcon.second,
+                    0,
+                    0,
+                    0
             )
             setTextViewDrawableColor(colorAndIcon.first)
-            profit.text = "${trader.profitPercentage.absoluteValue}%"
+            text = "${trader.profitPercentage.absoluteValue}%"
+        }
+
+        profitPerMonth.visibility = if (trader.followedByCurrentInvestor) {
+            View.GONE
+        } else {
+            View.VISIBLE
         }
 
         if (trader.followersCount == 0) {
@@ -103,15 +109,15 @@ class TraderDetailsActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
             ttooltip.setEnterAnimation(
-                PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
-                PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)
+                    PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
+                    PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
+                    PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)
             ).duration = 200
 
             ttooltip.setExitAnimation(
-                PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
-                PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
+                    PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
+                    PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
+                    PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
             ).duration = 200
 
             ttooltip.pivotX = Tools.fromDpToPx(65f) / 2
@@ -121,19 +127,19 @@ class TraderDetailsActivity : AppCompatActivity() {
         // Data
         var dataset = LineSet(labels, values)
         dataset.setColor(Color.parseColor("#758cbb"))
-            .setFill(Color.parseColor("#9C152949"))
-            .setDotsColor(Color.parseColor("#758cbb"))
-            .setThickness(4f)
-            .setDashed(floatArrayOf(10f, 10f))
-            .beginAt(5)
+                .setFill(Color.parseColor("#9C152949"))
+                .setDotsColor(Color.parseColor("#758cbb"))
+                .setThickness(4f)
+                .setDashed(floatArrayOf(10f, 10f))
+                .beginAt(5)
         chart.addData(dataset)
 
         dataset = LineSet(labels, values)
         dataset.setColor(Color.parseColor("#b3b5bb"))
-            .setFill(Color.parseColor("#9C152949"))
-            .setDotsColor(Color.parseColor("#ffc755"))
-            .setThickness(4f)
-            .endAt(6)
+                .setFill(Color.parseColor("#9C152949"))
+                .setDotsColor(Color.parseColor("#ffc755"))
+                .setThickness(4f)
+                .endAt(6)
         chart.addData(dataset)
 
         val chartAction = Runnable {
@@ -142,13 +148,13 @@ class TraderDetailsActivity : AppCompatActivity() {
         }
 
         chart.setXLabels(AxisRenderer.LabelPosition.NONE)
-            .setYLabels(AxisRenderer.LabelPosition.NONE)
-            .setTooltips(ttooltip)
-            .show(
-                Animation().setInterpolator(BounceInterpolator())
-                    .fromAlpha(0)
-                    .withEndAction(chartAction)
-            )
+                .setYLabels(AxisRenderer.LabelPosition.NONE)
+                .setTooltips(ttooltip)
+                .show(
+                        Animation().setInterpolator(BounceInterpolator())
+                                .fromAlpha(0)
+                                .withEndAction(chartAction)
+                )
     }
 
     private fun updateSubscribeIcon(followedByCurrentInvestor: Boolean) {
