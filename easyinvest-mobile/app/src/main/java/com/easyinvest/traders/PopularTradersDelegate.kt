@@ -58,7 +58,7 @@ class PopularTradersDelegate(
 
             val isTrader = item.extraAmount != null
             containerView?.isClickable = isTrader
-            traderMonthlyIncome.showMonthlyPercent(item.toTrader(), itemView.context)
+            traderMonthlyIncome.showMonthlyPercent(item.toTrader().profitPercentage, itemView.context)
         }
     }
 

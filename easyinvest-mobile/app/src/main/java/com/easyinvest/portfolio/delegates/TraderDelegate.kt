@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.easyinvest.R
 import com.easyinvest.base.DisplayableItem
-import com.easyinvest.data.Trader
 import com.easyinvest.portfolio.items.TraderItem
 import com.easyinvest.ui.TraderDetailsActivity
+import com.easyinvest.util.colorifyProfit
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_portfolio_trader.*
@@ -48,7 +48,6 @@ class TraderDelegate(
         }
 
         fun bind(item: TraderItem) {
-
             traderNameView.text = item.name
             traderTotalAmountView.text = item.displayTotalAmount
             traderExtraAmountView.text = item.displayExtraAmount
@@ -56,10 +55,13 @@ class TraderDelegate(
                     .load(item.avatar)
                     .apply(RequestOptions.circleCropTransform())
                     .into(traderImageView)
+            colorifyProfit(traderExtraAmountView, traderExtraAmountImage, (item.extraAmount
+                    ?: 0f) >= 0, item.displayExtraAmount)
 
             val isTrader = item.extraAmount != null
             containerView?.isClickable = isTrader
             traderExtraAmountView.visibility = if (isTrader) View.VISIBLE else View.GONE
+            traderExtraAmountImage.visibility = if (isTrader) View.VISIBLE else View.GONE
         }
     }
 
