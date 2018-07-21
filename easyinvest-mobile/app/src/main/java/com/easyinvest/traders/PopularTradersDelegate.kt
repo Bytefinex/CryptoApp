@@ -1,4 +1,4 @@
-package com.easyinvest.portfolio.delegates
+package com.easyinvest.traders
 
 import android.app.Activity
 import android.support.v7.widget.RecyclerView
@@ -8,27 +8,26 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.easyinvest.R
 import com.easyinvest.base.DisplayableItem
-import com.easyinvest.data.Trader
 import com.easyinvest.portfolio.items.TraderItem
 import com.easyinvest.ui.TraderDetailsActivity
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_portfolio_trader.*
 
-class TraderDelegate(
+class PopularTradersDelegate(
         private val activity: Activity,
         private val items: List<DisplayableItem>
-) : AbsListItemAdapterDelegate<TraderItem, DisplayableItem, TraderDelegate.TraderViewHolder>() {
+) : AbsListItemAdapterDelegate<PopularTraderItem, DisplayableItem, PopularTradersDelegate.PopularTraderViewHolder>() {
 
     private val inflater = activity.layoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup) =
-            TraderViewHolder(inflater.inflate(R.layout.item_portfolio_trader, parent, false))
+            PopularTraderViewHolder(inflater.inflate(R.layout.item_portfolio_trader, parent, false))
 
     override fun isForViewType(item: DisplayableItem, items: MutableList<DisplayableItem>, position: Int) =
-            item is TraderItem
+            item is PopularTraderItem
 
-    override fun onBindViewHolder(item: TraderItem, viewHolder: TraderViewHolder, payloads: MutableList<Any>) =
+    override fun onBindViewHolder(item: PopularTraderItem, viewHolder: PopularTraderViewHolder, payloads: MutableList<Any>) =
             viewHolder.bind(item)
 
     private fun onClickTrader(item: TraderItem) {
@@ -39,16 +38,17 @@ class TraderDelegate(
         activity.startActivity(TraderDetailsActivity.getIntent(activity, item.toTrader()))
     }
 
-    inner class TraderViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class PopularTraderViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         init {
             containerView?.setOnClickListener {
-                onClickTrader(items[adapterPosition] as TraderItem)
+                val item = (items[adapterPosition] as? PopularTraderItem)?.item
+                item?.let { onClickTrader(it) }
             }
         }
 
-        fun bind(item: TraderItem) {
-
+        fun bind(popularItem: PopularTraderItem) {
+            val item = popularItem.item
             traderNameView.text = item.name
             traderTotalAmountView.text = item.displayTotalAmount
             traderExtraAmountView.text = item.displayExtraAmount

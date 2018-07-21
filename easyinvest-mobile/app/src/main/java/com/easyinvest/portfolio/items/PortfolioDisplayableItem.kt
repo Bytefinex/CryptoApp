@@ -1,3 +1,0 @@
-package com.easyinvest.portfolio.items
-
-interface PortfolioDisplayableItem

@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.easyinvest.R
 import com.easyinvest.portfolio.items.HeaderItem
-import com.easyinvest.portfolio.items.PortfolioDisplayableItem
+import com.easyinvest.base.DisplayableItem
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_portfolio_header.*
 
-class HeaderDelegate(activity: Activity) : AbsListItemAdapterDelegate<HeaderItem, PortfolioDisplayableItem, HeaderDelegate.HeaderViewHolder>() {
+class HeaderDelegate(activity: Activity) : AbsListItemAdapterDelegate<HeaderItem, DisplayableItem, HeaderDelegate.HeaderViewHolder>() {
     private val inflater = activity.layoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup) =
             HeaderViewHolder(inflater.inflate(R.layout.item_portfolio_header, parent, false))
 
-    override fun isForViewType(item: PortfolioDisplayableItem, items: MutableList<PortfolioDisplayableItem>, position: Int) =
+    override fun isForViewType(item: DisplayableItem, items: MutableList<DisplayableItem>, position: Int) =
             item is HeaderItem
 
     override fun onBindViewHolder(item: HeaderItem, viewHolder: HeaderViewHolder, payloads: MutableList<Any>) =
