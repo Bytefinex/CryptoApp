@@ -3,6 +3,7 @@ package com.easyinvest.portfolio.items
 import com.easyinvest.base.DisplayableItem
 import com.easyinvest.data.Trader
 import com.easyinvest.traders.PopularTraderItem
+import com.easyinvest.util.toPercent
 
 data class TraderItem(
         val id: String,
@@ -22,7 +23,7 @@ data class TraderItem(
     val displayExtraAmount = displayMoneyPattern.format(extraAmount)
 
     fun toTrader(): Trader {
-        val percentage = ((totalAmount + (extraAmount ?: 0f)) / totalAmount - totalAmount).toInt()
+        val percentage = toPercent(totalAmount, extraAmount ?: 0f)
         return Trader(
                 name = name,
                 avatar = avatar,
