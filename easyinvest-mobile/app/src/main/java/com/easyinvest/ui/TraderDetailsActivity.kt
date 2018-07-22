@@ -174,7 +174,7 @@ class TraderDetailsActivity : AppCompatActivity() {
                 } else {
                     rateLabel.visibility = View.VISIBLE
                     description.text =
-                            if (trader.profitPercentage > 0) "If you had trusted $availableToInvestMoney free money a month ago, now you would have had ${(availableToInvestMoney + (availableToInvestMoney * trader.profitPercentage / 100))} \uD83E\uDD11"
+                            if (trader.profitPercentage > 0) "If you had trusted $availableToInvestMoney\$ spare money a month ago, now you would have had ${(availableToInvestMoney + (availableToInvestMoney * trader.profitPercentage / 100))}\$ \uD83E\uDD11"
                             else "Next week will be better for them?"
                 }
             })
