@@ -1,7 +1,6 @@
 package com.easyinvest.core
 
 import com.easyinvest.data.PortfolioDto
-import com.easyinvest.data.TraderDto
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -22,11 +21,9 @@ interface EthfinexApi {
         @Field("follower") investorId: String = CURRENT_USER_ID,
         @Field("user_followed") traderId: String,
         @Field("money_allocated") moneyAllocated: Float
-    ): Single<List<TraderDto>>
-
-    fun unfollow(
-        @Field("follower") investorId: String = CURRENT_USER_ID,
-        @Field("user_followed") traderId: String
     ): Completable
+
+    @POST("/subscription/delete/{id}")
+    fun unfollow(@Path("id") traderId: String): Completable
 
 }

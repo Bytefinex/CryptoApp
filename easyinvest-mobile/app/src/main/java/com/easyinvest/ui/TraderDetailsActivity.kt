@@ -139,9 +139,10 @@ class TraderDetailsActivity : AppCompatActivity() {
                     if (isFollowed) {
                         Toast.makeText(
                             this@TraderDetailsActivity,
-                            "You has been unfollowed!",
+                            "${trader.name} has been unfollowed!",
                             Toast.LENGTH_SHORT
                         ).show()
+                        Feature.unfollow(trader.id)
                     } else {
                         showBottomDialog()
                     }
@@ -263,11 +264,11 @@ class TraderDetailsActivity : AppCompatActivity() {
 
         view.amountOfInvestment.text = "$minToInvest\$"
         view.followDialogSeekBarAmount.max = availableToInvestMoney
-        view.followDialogSeekBarAmount.progress = if (minToInvest > 50) minToInvest else 50
+        view.followDialogSeekBarAmount.progress = if (minToInvest != 0) minToInvest else 1
         view.followDialogSeekBarAmount.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val MIN = 50
+                val MIN = 1
 
                 if (fromUser) {
                     view.amountOfInvestment.text = "${if (progress < MIN) {
@@ -289,7 +290,7 @@ class TraderDetailsActivity : AppCompatActivity() {
 
         view.follow.isEnabled = minToInvest > 5
         view.follow.setOnClickListener {
-            Feature.follow(trader.id, view.followDialogSeekBarAmount.progress)
+            Feature.follow(trader.id, view.followDialogSeekBarAmount.progress.toFloat())
             dialog.hide()
         }
 
