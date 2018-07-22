@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.easyinvest.R
 import com.easyinvest.base.DisplayableItem
-import com.easyinvest.portfolio.items.TraderItem
 import com.easyinvest.ui.TraderDetailsActivity
 import com.easyinvest.util.showMonthlyPercent
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
@@ -31,7 +30,7 @@ class PopularTradersDelegate(
     override fun onBindViewHolder(item: PopularTraderItem, viewHolder: PopularTraderViewHolder, payloads: MutableList<Any>) =
             viewHolder.bind(item)
 
-    private fun onClickTrader(item: TraderItem) {
+    private fun onClickTrader(item: PopularTraderItem) {
         activity.startActivity(TraderDetailsActivity.getIntent(activity, item.toTrader()))
     }
 
@@ -39,7 +38,7 @@ class PopularTradersDelegate(
 
         init {
             containerView?.setOnClickListener {
-                val item = (items[adapterPosition] as? PopularTraderItem)?.item
+                val item = (items[adapterPosition] as? PopularTraderItem)
                 item?.let { onClickTrader(it) }
             }
         }
@@ -52,8 +51,6 @@ class PopularTradersDelegate(
                     .apply(RequestOptions.circleCropTransform())
                     .into(traderImageView)
 
-            val isTrader = item.extraAmount != null
-            containerView?.isClickable = isTrader
             traderMonthlyIncome.showMonthlyPercent(popularItem.monthlyPercent, itemView.context)
         }
     }
