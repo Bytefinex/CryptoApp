@@ -74,7 +74,7 @@ object Feature {
     }
 
     private fun portfolioHeader(portfolioDto: PortfolioDto): List<DisplayableItem> {
-        return listOf(
+        val list = mutableListOf<DisplayableItem>(
                 HeaderItem(
                         totalAmount = portfolioDto.totalMoney,
                         extraAmount = portfolioDto.totalMoney - portfolioDto.startMoney
@@ -83,9 +83,12 @@ object Feature {
                 //                TraderItem(id = "5", name = "Ethereum", totalAmount = "10,77", extraAmount = "1,14", forcedAvatar = "https://ih1.redbubble.net/image.358612536.1165/flat,550x550,075,f.jpg"),
                 ReadyForInvestmentMoney(
                         totalAmount = portfolioDto.freeMoney
-                ),
-                SectionHeaderItem(title = "Following")
+                )
         )
+        if (portfolioDto.subscription.isNotEmpty()) {
+            list.add(SectionHeaderItem(title = "Following"))
+        }
+        return list
     }
 
 

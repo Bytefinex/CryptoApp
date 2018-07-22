@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.easyinvest.OpenTraders
 import com.easyinvest.R
 import com.easyinvest.base.BaseFragment
 import com.easyinvest.core.Feature
@@ -32,7 +33,7 @@ class PortfolioFragment : BaseFragment() {
         super.onStart()
         compositeDisposable.add(Feature.getPortfolio().subscribe({ items ->
             activity?.let {
-                portfolioRecyclerView.adapter = PortfolioAdapter(it, items)
+                portfolioRecyclerView.adapter = PortfolioAdapter(it, items, it as OpenTraders)
             }
         }, {
             showNoInternetToast()
