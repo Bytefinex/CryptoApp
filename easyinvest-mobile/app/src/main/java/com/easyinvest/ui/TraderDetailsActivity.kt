@@ -12,6 +12,7 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import android.view.animation.BounceInterpolator
 import android.widget.SeekBar
 import android.widget.TextView
@@ -124,6 +125,9 @@ class TraderDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader_details)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         Feature.refresh()
 
@@ -211,14 +215,14 @@ class TraderDetailsActivity : AppCompatActivity() {
             .setSmooth(true)
             .setDotsRadius(4f)
             .setDotsColor(dotsColor)
-            .setGradientFill(intArrayOf(fillColor, lineColor), null)
+            .setGradientFill(intArrayOf(lineColor, fillColor), null)
             .setThickness(4f)
             .beginAt(5)
         chart.addData(dataset)
 
         dataset = LineSet(labels, values)
         dataset.setColor(lineColor)
-            .setGradientFill(intArrayOf(fillColor, lineColor), null)
+            .setGradientFill(intArrayOf(lineColor, fillColor), null)
             .setSmooth(true)
             .setDotsRadius(4f)
             .setDotsColor(dotsColor)

@@ -6,5 +6,6 @@
     <color name="colorAccent">#EA2B8D</color>
     <color name="green">#A1C26E</color>
     <color name="portfolioBackground">#EBECEE</color>
-    <color name="red">#96c23333</color>
+    <color name="red">#96b10f0f</color>
+    <color name="redTraderDetails">#96b10f0f</color>
 </resources>

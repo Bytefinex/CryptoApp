@@ -27,8 +27,7 @@
         <activity
             android:name=".ui.TraderDetailsActivity"
             android:label="@string/title_activity_trader_details"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.FollowActivity"></activity>
+            android:theme="@style/TraderDetails" />
     </application>
 
 </manifest>
