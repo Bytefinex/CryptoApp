@@ -3,6 +3,7 @@ package com.easyinvest.ui
 import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
@@ -133,16 +134,16 @@ class TraderDetailsActivity : AppCompatActivity() {
 
         compositeDisposable.add(Feature.followState(trader.id)
             .subscribe { isFollowed ->
-                headerFollowButton.text = if (isFollowed) "Follow" else "Unfollow"
+                headerFollowButton.text = if (isFollowed) "Unfollow" else "Follow"
                 headerFollowButton.setOnClickListener {
                     if (isFollowed) {
-                        showBottomDialog()
-                    } else {
                         Toast.makeText(
                             this@TraderDetailsActivity,
                             "You has been unfollowed!",
                             Toast.LENGTH_SHORT
                         ).show()
+                    } else {
+                        showBottomDialog()
                     }
                 }
 
