@@ -7,14 +7,15 @@ data class PortfolioDto(
     val startMoney: Float,
     val freeMoney: Float,
 
-    val subscriptionDto: List<SubscriptionDto>?
+    val subscription: List<SubscriptionDto>?
 )
 
 data class SubscriptionDto(
     val userFollowedId: String,
     val moneyAllocated: Float,
     val totalMoney: Float,
-    val trader: TraderDto
+    val name: String,
+    val initialRatio: String
 )
 
 data class TraderDto(

@@ -4,6 +4,7 @@ import com.easyinvest.base.DisplayableItem
 import com.easyinvest.data.Trader
 import com.easyinvest.traders.PopularTraderItem
 import com.easyinvest.util.toPercent
+import kotlin.math.absoluteValue
 
 data class TraderItem(
     val id: String,
@@ -20,7 +21,7 @@ data class TraderItem(
     val avatar = forcedAvatar ?: avatarSource.format(id.hashCode() % numberOfPhotos)
 
     val displayTotalAmount = displayMoneyPattern.format(totalAmount)
-    val displayExtraAmount = displayMoneyPattern.format(extraAmount)
+    val displayExtraAmount = displayMoneyPattern.format(extraAmount?.absoluteValue)
 
     fun toTrader(): Trader {
         val percentage = toPercent(totalAmount, extraAmount ?: 0f)

@@ -6,7 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
 
-val CURRENT_USER_ID = "3"
+val CURRENT_USER_ID = "1"
 
 interface EthfinexApi {
 

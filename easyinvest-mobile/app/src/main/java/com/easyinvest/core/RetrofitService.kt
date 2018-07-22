@@ -31,7 +31,7 @@ object RetrofitService {
             )
         )
             //TODO .baseUrl("https://grandmother.herokuapp.com/")
-            .baseUrl("http://192.168.166.101:8000/")
+            .baseUrl("https://grandmother.herokuapp.com//")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
             .create(EthfinexApi::class.java)
