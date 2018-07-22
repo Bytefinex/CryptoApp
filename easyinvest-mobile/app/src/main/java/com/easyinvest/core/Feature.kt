@@ -3,6 +3,7 @@ package com.easyinvest.core
 import com.easyinvest.base.DisplayableItem
 import com.easyinvest.data.PortfolioDto
 import com.easyinvest.portfolio.items.HeaderItem
+import com.easyinvest.portfolio.items.ReadyForInvestmentMoney
 import com.easyinvest.portfolio.items.SectionHeaderItem
 import com.easyinvest.portfolio.items.TraderItem
 import com.easyinvest.traders.PopularTraderItem
@@ -80,12 +81,8 @@ object Feature {
                 ),
                 SectionHeaderItem(title = "Ready for investments"),
                 //                TraderItem(id = "5", name = "Ethereum", totalAmount = "10,77", extraAmount = "1,14", forcedAvatar = "https://ih1.redbubble.net/image.358612536.1165/flat,550x550,075,f.jpg"),
-                TraderItem(
-                        id = "6",
-                        name = "USD",
-                        totalAmount = portfolioDto.freeMoney,
-                        extraAmount = null,
-                        forcedAvatar = "https://trigjig.com/wp-content/uploads/us-01.png"
+                ReadyForInvestmentMoney(
+                        totalAmount = portfolioDto.freeMoney
                 ),
                 SectionHeaderItem(title = "Following")
         )
