@@ -26,8 +26,8 @@ class HeaderDelegate(activity: Activity) : AbsListItemAdapterDelegate<HeaderItem
 
     class HeaderViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: HeaderItem) {
-            totalAmountView.text = item.totalAmount
-            colorifyProfit(extraAmountView, extraAmountImage, isPositive = item.extraAmountValue >= 0, displayText = item.extraAmount)
+            totalAmountView.text = item.displayTotalAmount
+            colorifyProfit(extraAmountView, extraAmountImage, isPositive = item.extraAmount >= 0, displayText = item.displayExtraAmount)
         }
     }
 
