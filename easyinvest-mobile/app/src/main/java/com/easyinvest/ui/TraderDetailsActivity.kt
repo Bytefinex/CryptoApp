@@ -109,7 +109,7 @@ class TraderDetailsActivity : AppCompatActivity() {
         if (trader.followersCount == 0) {
             followers.text = "has no followers"
         } else {
-            followers.text = "${trader.followersCount} followers"
+            followers.text = "${trader.followersCount}"
         }
 
         headerFollowButton.setOnClickListener {
