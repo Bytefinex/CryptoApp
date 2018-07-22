@@ -138,7 +138,7 @@ class TraderDetailsActivity : AppCompatActivity() {
 
         compositeDisposable.add(Feature.followState(trader.id)
             .subscribe { isFollowed ->
-                headerFollowButton.text = if (isFollowed) "Unfollow" else "Follow"
+                headerFollowButton.text = if (isFollowed) "Unfollow" else "Follow\n 10\$ / month"
                 headerFollowButton.setOnClickListener {
                     if (isFollowed) {
                         Toast.makeText(
@@ -153,9 +153,9 @@ class TraderDetailsActivity : AppCompatActivity() {
                 }
 
                 if (isFollowed) {
-                    rateLabel.visibility = View.GONE
+                    description.text = if (trader.profitPercentage > 0) "Horray, your wealth are growing!" else "Sorry, looks like that week was not so affective"
                 } else {
-                    rateLabel.visibility = View.VISIBLE
+                    description.text = if (trader.profitPercentage > 0) "" else ""
                 }
             })
 
@@ -296,6 +296,7 @@ class TraderDetailsActivity : AppCompatActivity() {
         view.follow.setOnClickListener {
             Feature.follow(trader.id, view.followDialogSeekBarAmount.progress.toFloat())
             dialog.hide()
+            finish()
         }
 
         dialog.show()
