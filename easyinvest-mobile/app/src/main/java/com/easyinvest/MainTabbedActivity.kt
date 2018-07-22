@@ -10,7 +10,11 @@ import com.easyinvest.fragments.TradersFragment
 import com.easyinvest.portfolio.PortfolioFragment
 import kotlinx.android.synthetic.main.activity_main_tabbed.*
 
-class MainTabbedActivity : AppCompatActivity() {
+class MainTabbedActivity : AppCompatActivity(), OpenTraders {
+    override fun openTraders() {
+        navigation.selectedItemId = R.id.navigation_dashboard
+    }
+
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         supportActionBar?.elevation = 0f
