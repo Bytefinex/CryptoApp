@@ -15,6 +15,7 @@ import android.view.View
 import android.view.animation.BounceInterpolator
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.db.chart.animation.Animation
@@ -23,10 +24,12 @@ import com.db.chart.renderer.AxisRenderer
 import com.db.chart.tooltip.Tooltip
 import com.db.chart.util.Tools
 import com.easyinvest.R
-import com.easyinvest.core.MainDataSource
+import com.easyinvest.core.Feature
+import com.easyinvest.core.RetrofitService
 import com.easyinvest.data.Trader
 import com.easyinvest.util.showMonthlyPercent
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.dialog_follow.view.*
 import kotlinx.android.synthetic.main.trader_header.*
 import java.util.*
@@ -70,8 +73,8 @@ class TraderDetailsActivity : AppCompatActivity() {
         rnd.nextInt(4) + 4,
         rnd.nextInt(3) + 3,
         rnd.nextInt(4) + 3,
-        rnd.nextInt(5) + 5,
-        rnd.nextInt(5) + 6,
+        rnd.nextInt(5) + 3,
+        rnd.nextInt(5) + 4,
         rnd.nextInt(5) + 3
     ).map { it.toFloat() }.toFloatArray()
 
@@ -81,15 +84,37 @@ class TraderDetailsActivity : AppCompatActivity() {
     private val minToInvest
         get() = (availableToInvestMoney * 0.1).roundToInt()
 
+    private val compositeDisposable = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader_details)
 
-        MainDataSource.getAvailableToInvestMoney()
+        RetrofitService.api.portfolio()
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+
+        compositeDisposable.add(Feature.availableMoneyToInvest()
             .subscribe {
                 availableToInvestMoney = it
-            }
+            })
+
+        compositeDisposable.add(Feature.followState(trader.id)
+            .subscribe { isFollowed ->
+                headerFollowButton.text = if (isFollowed) "Follow" else "Unfollow"
+                headerFollowButton.setOnClickListener {
+                    if (isFollowed) {
+                        showBottomDialog()
+                    } else {
+                        Toast.makeText(
+                            this@TraderDetailsActivity,
+                            "You has been unfollowed!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            })
+
 
         name.text = trader.name
 
@@ -111,11 +136,6 @@ class TraderDetailsActivity : AppCompatActivity() {
         } else {
             followers.text = "${trader.followersCount}"
         }
-
-        headerFollowButton.setOnClickListener {
-            showBottomDialog()
-        }
-        updateSubscribeIcon(trader.followedByCurrentInvestor)
 
         // Tooltip
         ttooltip = Tooltip(this, R.layout.linechart_three_tooltip, R.id.value)
@@ -174,6 +194,11 @@ class TraderDetailsActivity : AppCompatActivity() {
             )
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
+
     private lateinit var dialog: BottomSheetDialog
 
     private fun showBottomDialog() {
@@ -215,10 +240,12 @@ class TraderDetailsActivity : AppCompatActivity() {
             }
         })
 
+        view.follow.isEnabled = minToInvest > 5
+        view.follow.setOnClickListener {
+            Feature.follow(trader.id, view.followDialogSeekBarAmount.progress)
+            dialog.hide()
+        }
+
         dialog.show()
-    }
-
-    private fun updateSubscribeIcon(followedByCurrentInvestor: Boolean) {
-
     }
 }

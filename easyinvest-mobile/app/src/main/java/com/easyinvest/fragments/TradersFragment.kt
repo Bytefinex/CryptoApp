@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.easyinvest.R
 import com.easyinvest.base.BaseFragment
-import com.easyinvest.core.MainDataSource
-import com.easyinvest.data.Trader
+import com.easyinvest.core.Feature
 import com.easyinvest.traders.TradersAdapter
-import com.easyinvest.ui.TraderDetailsActivity
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_traders.*
 
@@ -35,7 +33,7 @@ class TradersFragment : BaseFragment() {
         tradersRecyclerView.layoutManager = LinearLayoutManager(context)
 
         compositeDisposable.add(
-                MainDataSource.getPopularTraders().subscribe({ item ->
+                Feature.getPopularTraders().subscribe({ item ->
                     this@TradersFragment.activity?.let {
                         tradersRecyclerView.adapter = TradersAdapter(it, item)
                     }

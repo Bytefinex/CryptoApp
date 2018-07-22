@@ -25,6 +25,7 @@ data class TraderItem(
     fun toTrader(): Trader {
         val percentage = toPercent(totalAmount, extraAmount ?: 0f)
         return Trader(
+                id = id,
                 name = name,
                 avatar = avatar,
                 profitPercentage = percentage,

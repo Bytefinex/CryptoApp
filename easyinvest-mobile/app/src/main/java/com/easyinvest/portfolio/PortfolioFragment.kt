@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.easyinvest.R
 import com.easyinvest.base.BaseFragment
-import com.easyinvest.core.MainDataSource
+import com.easyinvest.core.Feature
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_portfolio.*
 
@@ -27,7 +27,7 @@ class PortfolioFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         portfolioRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        compositeDisposable.add(MainDataSource.getPortfolio().subscribe({ items ->
+        compositeDisposable.add(Feature.getPortfolio().subscribe({ items ->
             activity?.let {
                 portfolioRecyclerView.adapter = PortfolioAdapter(it, items)
             }

@@ -3,6 +3,7 @@ package com.easyinvest.data
 import java.io.Serializable
 
 data class Trader(
+    val id: String,
     val name: String,
     val avatar: String,
     val profitPercentage: Int,

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.easyinvest.core.Feature
 import com.easyinvest.fragments.SettingsFragment
 import com.easyinvest.fragments.TradersFragment
 import com.easyinvest.portfolio.PortfolioFragment
@@ -38,6 +39,8 @@ class MainTabbedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_tabbed)
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         initialView()
+
+        Feature.refresh()
     }
 
     private fun initialView() {
