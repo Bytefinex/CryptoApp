@@ -2,7 +2,6 @@ package com.easyinvest.portfolio.items
 
 import com.easyinvest.base.DisplayableItem
 import com.easyinvest.data.Trader
-import com.easyinvest.traders.PopularTraderItem
 import com.easyinvest.util.toPercent
 import kotlin.math.absoluteValue
 
@@ -31,12 +30,8 @@ data class TraderItem(
             avatar = avatar,
             profitPercentage = percentage,
             pricePerMonth = 10f,
-            followersCount = 1334,
+            followersCount = 334,
             followedByCurrentInvestor = true
         )
-    }
-
-    fun toPopular(): PopularTraderItem {
-        return PopularTraderItem(this)
     }
 }

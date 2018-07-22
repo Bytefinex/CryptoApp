@@ -87,12 +87,9 @@ object Feature {
 
 
     fun getPopularTraders(): Single<List<PopularTraderItem>> =
-        getPortfolio()
+        RetrofitService.api.traders()
             .map {
-                it
-                    .filter { it is TraderItem }
-                    .map { it as TraderItem }
-                    .map { PopularTraderItem(it) }
+                it.map { PopularTraderItem(TraderItem(it.id, it.username, 0f, null), it.monthGrowth.toInt()) }
             }
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -105,6 +102,7 @@ object Feature {
         RetrofitService.api.follow(traderId = traderId, moneyAllocated = amount)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete { refresh() }
+            .onErrorComplete()
             .subscribe()
     }
 
@@ -116,6 +114,7 @@ object Feature {
         RetrofitService.api.unfollow(traderId = traderId)
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete { refresh() }
+            .onErrorComplete()
             .subscribe()
     }
 

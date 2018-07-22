@@ -17,10 +17,12 @@ class MainTabbedActivity : AppCompatActivity() {
         title = item.title
         when (item.itemId) {
             R.id.navigation_home -> {
+                Feature.refresh()
                 loadFragment(PortfolioFragment.instance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
+                Feature.refresh()
                 loadFragment(TradersFragment.instance())
                 return@OnNavigationItemSelectedListener true
             }

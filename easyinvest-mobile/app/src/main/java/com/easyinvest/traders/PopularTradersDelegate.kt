@@ -32,10 +32,6 @@ class PopularTradersDelegate(
             viewHolder.bind(item)
 
     private fun onClickTrader(item: TraderItem) {
-        if (item.extraAmount == null) {
-            // Click on not real trader (USD)
-            return
-        }
         activity.startActivity(TraderDetailsActivity.getIntent(activity, item.toTrader()))
     }
 
@@ -58,7 +54,7 @@ class PopularTradersDelegate(
 
             val isTrader = item.extraAmount != null
             containerView?.isClickable = isTrader
-            traderMonthlyIncome.showMonthlyPercent(item.toTrader().profitPercentage, itemView.context)
+            traderMonthlyIncome.showMonthlyPercent(popularItem.monthlyPercent, itemView.context)
         }
     }
 
