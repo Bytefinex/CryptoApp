@@ -127,23 +127,36 @@
             app:chart_labelColor="#6a84c3" />
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:contentPadding="16dp">
+        <TextView
+
+            android:text="asdasdas"
+            android:textColor="@color/black87"
+            android:textSize="16dp"
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.CardView>
+
+    <android.widget.Space
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        />
+
     <Button
         android:id="@+id/headerFollowButton"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/AppTheme.RoundedCornerMaterialButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="16dp"
         android:text="Follow" />
-
-    <TextView
-        android:id="@+id/rateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="10$ / month"
-        android:textColor="@color/black70"
-        android:textSize="16dp" />
 </LinearLayout>
