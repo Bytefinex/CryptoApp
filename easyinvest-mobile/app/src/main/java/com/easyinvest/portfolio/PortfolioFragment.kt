@@ -26,7 +26,10 @@ class PortfolioFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         portfolioRecyclerView.layoutManager = LinearLayoutManager(context)
+    }
 
+    override fun onStart() {
+        super.onStart()
         compositeDisposable.add(Feature.getPortfolio().subscribe({ items ->
             activity?.let {
                 portfolioRecyclerView.adapter = PortfolioAdapter(it, items)
@@ -34,12 +37,10 @@ class PortfolioFragment : BaseFragment() {
         }, {
             showNoInternetToast()
         }))
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStop() {
+        super.onStop()
         compositeDisposable.clear()
     }
-
 }

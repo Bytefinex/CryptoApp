@@ -31,6 +31,10 @@ class TradersFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         tradersRecyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         compositeDisposable.add(
                 Feature.getPopularTraders().subscribe({ item ->
@@ -41,5 +45,10 @@ class TradersFragment : BaseFragment() {
                     showNoInternetToast()
                 })
         )
+    }
+
+    override fun onStop() {
+        super.onStop()
+        compositeDisposable.clear()
     }
 }
