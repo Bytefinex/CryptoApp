@@ -30,7 +30,7 @@ object RetrofitService {
                 )
             )
         )
-            .baseUrl("https://grandmother.herokuapp.com/")
+            .baseUrl("http://172.29.6.2:8000/")
             //.baseUrl("https://grandmother.herokuapp.com//")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
