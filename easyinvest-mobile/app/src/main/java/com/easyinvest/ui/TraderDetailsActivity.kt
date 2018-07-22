@@ -153,9 +153,9 @@ class TraderDetailsActivity : AppCompatActivity() {
                 }
 
                 if (isFollowed) {
-                    description.text = if (trader.profitPercentage > 0) "Horray, your wealth are growing!" else "Sorry, looks like that week was not so affective"
+                    description.text = if (trader.profitPercentage > 0) "Horray, your wealth are growing!" else "Sorry, looks like that week was not lucky!"
                 } else {
-                    description.text = if (trader.profitPercentage > 0) "" else ""
+                    description.text = if (trader.profitPercentage > 0) "Follow ${trader.name} and increase your money. If you have followed him month ago, you current ${availableToInvestMoney} would be ${(availableToInvestMoney * trader.profitPercentage / 100)}" else "Check this guy on the next week, I promise he will try harder!"
                 }
             })
 
