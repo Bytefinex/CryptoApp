@@ -4,12 +4,9 @@ import com.easyinvest.data.PortfolioDto
 import com.easyinvest.data.TraderDto
 import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
-val CURRENT_USER_ID = "1"
+val CURRENT_USER_ID = "3"
 
 interface EthfinexApi {
 
@@ -19,6 +16,7 @@ interface EthfinexApi {
     @GET("/traders")
     fun traders(): Single<PortfolioDto>
 
+    @FormUrlEncoded
     @POST("/subscription/create/")
     fun follow(
         @Field("follower") investorId: String = CURRENT_USER_ID,

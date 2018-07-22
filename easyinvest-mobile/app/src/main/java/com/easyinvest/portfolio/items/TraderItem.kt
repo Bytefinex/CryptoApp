@@ -6,11 +6,11 @@ import com.easyinvest.traders.PopularTraderItem
 import com.easyinvest.util.toPercent
 
 data class TraderItem(
-        val id: String,
-        val name: String,
-        val totalAmount: Float,
-        val extraAmount: Float?,
-        val forcedAvatar: String? = null
+    val id: String,
+    val name: String,
+    val totalAmount: Float,
+    val extraAmount: Float?,
+    val forcedAvatar: String? = null
 ) : DisplayableItem {
 
     private val avatarSource = "https://randomuser.me/api/portraits/men/%d.jpg"
@@ -25,13 +25,13 @@ data class TraderItem(
     fun toTrader(): Trader {
         val percentage = toPercent(totalAmount, extraAmount ?: 0f)
         return Trader(
-                id = id,
-                name = name,
-                avatar = avatar,
-                profitPercentage = percentage,
-                pricePerMonth = 10f,
-                followersCount = 1334,
-                followedByCurrentInvestor = true
+            id = id,
+            name = name,
+            avatar = avatar,
+            profitPercentage = percentage,
+            pricePerMonth = 10f,
+            followersCount = 1334,
+            followedByCurrentInvestor = true
         )
     }
 

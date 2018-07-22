@@ -39,8 +39,6 @@ class MainTabbedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_tabbed)
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         initialView()
-
-        Feature.refresh()
     }
 
     private fun initialView() {

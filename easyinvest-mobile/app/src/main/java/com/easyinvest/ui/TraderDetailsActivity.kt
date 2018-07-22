@@ -90,9 +90,7 @@ class TraderDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader_details)
 
-        RetrofitService.api.portfolio()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
+        Feature.refresh()
 
         compositeDisposable.add(Feature.availableMoneyToInvest()
             .subscribe {

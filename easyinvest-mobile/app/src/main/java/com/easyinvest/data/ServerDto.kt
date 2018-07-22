@@ -7,7 +7,7 @@ data class PortfolioDto(
     val startMoney: Float,
     val freeMoney: Float,
 
-    val subscriptionDto: List<SubscriptionDto>
+    val subscriptionDto: List<SubscriptionDto>?
 )
 
 data class SubscriptionDto(
@@ -23,7 +23,7 @@ data class TraderDto(
     val isFollowed: Boolean,
     val monthGrowth: Float,
     val followersCount: Int,
-    val dataBalances: List<DataBalanceDto>
+    val dataBalances: List<DataBalanceDto>?
 )
 
 data class DataBalanceDto(
