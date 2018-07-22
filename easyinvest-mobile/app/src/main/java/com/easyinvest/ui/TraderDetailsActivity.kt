@@ -8,10 +8,12 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.BottomSheetDialog
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.animation.BounceInterpolator
+import android.widget.SeekBar
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -21,9 +23,14 @@ import com.db.chart.renderer.AxisRenderer
 import com.db.chart.tooltip.Tooltip
 import com.db.chart.util.Tools
 import com.easyinvest.R
+import com.easyinvest.core.MainDataSource
 import com.easyinvest.data.Trader
 import com.easyinvest.util.showMonthlyPercent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.dialog_follow.view.*
 import kotlinx.android.synthetic.main.trader_header.*
+import java.util.*
+import kotlin.math.roundToInt
 
 
 private const val TRADER_KEY = "TRADER_KEY"
@@ -33,8 +40,8 @@ fun TextView.setTextViewDrawableColor(color: Int) {
         if (drawable != null) {
             drawable.colorFilter =
                     PorterDuffColorFilter(
-                            ContextCompat.getColor(context, color),
-                            PorterDuff.Mode.SRC_IN
+                        ContextCompat.getColor(context, color),
+                        PorterDuff.Mode.SRC_IN
                     )
         }
     }
@@ -44,9 +51,9 @@ class TraderDetailsActivity : AppCompatActivity() {
 
     companion object {
         fun getIntent(context: Context, trader: Trader) =
-                Intent(context, TraderDetailsActivity::class.java).apply {
-                    putExtra(TRADER_KEY, trader)
-                }
+            Intent(context, TraderDetailsActivity::class.java).apply {
+                putExtra(TRADER_KEY, trader)
+            }
 
         private fun fromIntent(intent: Intent) = intent.extras[TRADER_KEY] as Trader
     }
@@ -55,20 +62,41 @@ class TraderDetailsActivity : AppCompatActivity() {
 
     private val labels = arrayOf("Jan", "Fev", "Mar", "Apr", "Jun", "May", "Jul", "Aug", "Sep")
 
-    private val values = listOf(5, 6, 4, 8, 6, 9, 11, 13, 7).map { it.toFloat() }.toFloatArray()
+    private val rnd = Random()
+    private val values = listOf(
+        rnd.nextInt(5) + 3,
+        rnd.nextInt(3) + 3,
+        rnd.nextInt(2) + 2,
+        rnd.nextInt(4) + 4,
+        rnd.nextInt(3) + 3,
+        rnd.nextInt(4) + 3,
+        rnd.nextInt(5) + 5,
+        rnd.nextInt(5) + 6,
+        rnd.nextInt(5) + 3
+    ).map { it.toFloat() }.toFloatArray()
 
     private lateinit var ttooltip: Tooltip
+
+    private var availableToInvestMoney = 0
+    private val minToInvest
+        get() = (availableToInvestMoney * 0.1).roundToInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trader_details)
 
+        MainDataSource.getAvailableToInvestMoney()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                availableToInvestMoney = it
+            }
+
         name.text = trader.name
 
         Glide.with(this)
-                .load(trader.avatar)
-                .apply(RequestOptions.circleCropTransform())
-                .into(avatar)
+            .load(trader.avatar)
+            .apply(RequestOptions.circleCropTransform())
+            .into(avatar)
 
         profit.showMonthlyPercent(trader, this)
 
@@ -84,6 +112,9 @@ class TraderDetailsActivity : AppCompatActivity() {
             followers.text = "${trader.followersCount} followers"
         }
 
+        headerFollowButton.setOnClickListener {
+            showBottomDialog()
+        }
         updateSubscribeIcon(trader.followedByCurrentInvestor)
 
         // Tooltip
@@ -95,15 +126,15 @@ class TraderDetailsActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
             ttooltip.setEnterAnimation(
-                    PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
-                    PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
-                    PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)
+                PropertyValuesHolder.ofFloat(View.ALPHA, 1f),
+                PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f),
+                PropertyValuesHolder.ofFloat(View.SCALE_X, 1f)
             ).duration = 200
 
             ttooltip.setExitAnimation(
-                    PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
-                    PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
-                    PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
+                PropertyValuesHolder.ofFloat(View.ALPHA, 0f),
+                PropertyValuesHolder.ofFloat(View.SCALE_Y, 0f),
+                PropertyValuesHolder.ofFloat(View.SCALE_X, 0f)
             ).duration = 200
 
             ttooltip.pivotX = Tools.fromDpToPx(65f) / 2
@@ -113,19 +144,19 @@ class TraderDetailsActivity : AppCompatActivity() {
         // Data
         var dataset = LineSet(labels, values)
         dataset.setColor(Color.parseColor("#758cbb"))
-                .setFill(Color.parseColor("#9C152949"))
-                .setDotsColor(Color.parseColor("#758cbb"))
-                .setThickness(4f)
-                .setDashed(floatArrayOf(10f, 10f))
-                .beginAt(5)
+            .setFill(Color.parseColor("#9C152949"))
+            .setDotsColor(Color.parseColor("#758cbb"))
+            .setThickness(4f)
+            .setDashed(floatArrayOf(10f, 10f))
+            .beginAt(5)
         chart.addData(dataset)
 
         dataset = LineSet(labels, values)
         dataset.setColor(Color.parseColor("#b3b5bb"))
-                .setFill(Color.parseColor("#9C152949"))
-                .setDotsColor(Color.parseColor("#ffc755"))
-                .setThickness(4f)
-                .endAt(6)
+            .setFill(Color.parseColor("#9C152949"))
+            .setDotsColor(Color.parseColor("#ffc755"))
+            .setThickness(4f)
+            .endAt(6)
         chart.addData(dataset)
 
         val chartAction = Runnable {
@@ -134,13 +165,57 @@ class TraderDetailsActivity : AppCompatActivity() {
         }
 
         chart.setXLabels(AxisRenderer.LabelPosition.NONE)
-                .setYLabels(AxisRenderer.LabelPosition.NONE)
-                .setTooltips(ttooltip)
-                .show(
-                        Animation().setInterpolator(BounceInterpolator())
-                                .fromAlpha(0)
-                                .withEndAction(chartAction)
-                )
+            .setYLabels(AxisRenderer.LabelPosition.NONE)
+            .setTooltips(ttooltip)
+            .show(
+                Animation().setInterpolator(BounceInterpolator())
+                    .fromAlpha(0)
+                    .withEndAction(chartAction)
+            )
+    }
+
+    private lateinit var dialog: BottomSheetDialog
+
+    private fun showBottomDialog() {
+        dialog = BottomSheetDialog(this@TraderDetailsActivity)
+        val view = this@TraderDetailsActivity.layoutInflater.inflate(
+            R.layout.dialog_follow,
+            null
+        )
+        dialog.setContentView(view)
+
+        view.followDialogName.text = trader.name
+        Glide.with(this)
+            .load(trader.avatar)
+            .apply(RequestOptions.circleCropTransform())
+            .into(view.followDialogAvatar)
+
+        view.amountOfInvestment.text = "$minToInvest\$"
+        view.followDialogSeekBarAmount.max = availableToInvestMoney
+        view.followDialogSeekBarAmount.setOnSeekBarChangeListener(object :
+            SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val MIN = minToInvest
+
+                if (fromUser) {
+                    view.amountOfInvestment.text = "${if (progress < MIN) {
+                        MIN
+                    } else {
+                        progress
+                    }}\$"
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+        })
+
+        dialog.show()
     }
 
     private fun updateSubscribeIcon(followedByCurrentInvestor: Boolean) {

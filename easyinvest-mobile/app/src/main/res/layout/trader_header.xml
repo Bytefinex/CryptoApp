@@ -110,6 +110,8 @@
             android:textSize="20dp" />
 
         <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/headerFollowButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

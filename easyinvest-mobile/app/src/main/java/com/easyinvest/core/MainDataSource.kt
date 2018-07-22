@@ -5,7 +5,10 @@ import com.easyinvest.portfolio.items.HeaderItem
 import com.easyinvest.portfolio.items.SectionHeaderItem
 import com.easyinvest.portfolio.items.TraderItem
 import com.easyinvest.traders.PopularTraderItem
+import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.*
 
 object MainDataSource {
     fun getPortfolio(): Single<List<DisplayableItem>> =
@@ -32,4 +35,8 @@ object MainDataSource {
                                 .map { it as TraderItem }
                                 .map { PopularTraderItem(it) }
                     }
+
+    // just round this fckng number
+    fun getAvailableToInvestMoney(): Observable<Int> = Observable.just(Random().nextInt(500) + 100)
+
 }
