@@ -75,8 +75,8 @@ object Feature {
     private fun portfolioHeader(portfolioDto: PortfolioDto): List<DisplayableItem> {
         return listOf(
                 HeaderItem(
-                        totalAmount = "\$${portfolioDto.totalMoney}",
-                        extraAmount = "\$${portfolioDto.totalMoney - portfolioDto.startMoney}"
+                        totalAmount = portfolioDto.totalMoney,
+                        extraAmount = portfolioDto.totalMoney - portfolioDto.startMoney
                 ),
                 SectionHeaderItem(title = "Ready for investments"),
                 //                TraderItem(id = "5", name = "Ethereum", totalAmount = "10,77", extraAmount = "1,14", forcedAvatar = "https://ih1.redbubble.net/image.358612536.1165/flat,550x550,075,f.jpg"),
@@ -93,11 +93,11 @@ object Feature {
 
 
     fun getPopularTraders(): Single<List<PopularTraderItem>> =
-        RetrofitService.api.traders()
-            .map {
-                it.map { PopularTraderItem(TraderItem(it.id, it.username, 0f, null, subscriptionId = it.subscriptionId), it.monthGrowth.toInt()) }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
+            RetrofitService.api.traders()
+                    .map {
+                        it.map { PopularTraderItem(TraderItem(it.id, it.username, 0f, null, subscriptionId = it.subscriptionId), it.monthGrowth.toInt()) }
+                    }
+                    .observeOn(AndroidSchedulers.mainThread())
 
     // just round this fckng number
     fun availableMoneyToInvest(): Observable<Int> =
@@ -106,10 +106,10 @@ object Feature {
 
     fun follow(traderId: String, amount: Float) {
         RetrofitService.api.follow(traderId = traderId, moneyAllocated = amount)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { refresh() }
-            .onErrorComplete()
-            .subscribe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete { refresh() }
+                .onErrorComplete()
+                .subscribe()
     }
 
     fun followState(traiderId: String): Observable<Boolean> =
@@ -118,10 +118,10 @@ object Feature {
 
     fun unfollow(subscriptionId: String?) {
         RetrofitService.api.unfollow(subscriptionId ?: "")
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { refresh() }
-            .onErrorComplete()
-            .subscribe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete { refresh() }
+                .onErrorComplete()
+                .subscribe()
     }
 
 }
