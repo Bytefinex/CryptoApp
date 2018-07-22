@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:layout_marginTop="32dp"
         android:paddingLeft="16dp">
 
         <ImageView
@@ -159,5 +160,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_margin="16dp"
+        android:textSize="18dp"
         android:text="Follow" />
+
+    <TextView
+        android:id="@+id/rateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10$ / month"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="12dp"
+        android:textSize="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="@color/black70"
+        app:layout_constraintBottom_toBottomOf="@+id/rate2"
+        app:layout_constraintStart_toEndOf="@+id/rate2"
+        app:layout_constraintTop_toTopOf="@+id/rate2" />
 </LinearLayout>
