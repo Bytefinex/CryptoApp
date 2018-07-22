@@ -34,7 +34,7 @@ object Feature {
                         portfolioHeader(it) + (it.subscription.map {
                             TraderItem(
                                     id = it.userFollowedId,
-                                    name = it.trader.username,
+                                    name = it.trader.name,
                                     totalAmount = it.totalMoney,
                                     extraAmount = it.totalMoney - it.moneyAllocated,
                                     subscriptionId = it.trader.subscriptionId
@@ -95,7 +95,7 @@ object Feature {
     fun getPopularTraders(): Single<List<PopularTraderItem>> =
             RetrofitService.api.traders()
                     .map {
-                        it.map { PopularTraderItem(TraderItem(it.id, it.username, 0f, null, subscriptionId = it.subscriptionId), it.monthGrowth.toInt()) }
+                        it.map { PopularTraderItem(TraderItem(it.id, it.name, 0f, null, subscriptionId = it.subscriptionId), it.monthGrowth.toInt()) }
                     }
                     .observeOn(AndroidSchedulers.mainThread())
 

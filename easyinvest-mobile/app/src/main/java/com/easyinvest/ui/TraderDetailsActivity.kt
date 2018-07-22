@@ -110,8 +110,24 @@ class TraderDetailsActivity : AppCompatActivity() {
         rnd.nextInt(3) + 1
     ).map { it.toFloat() }.toFloatArray()
 
+    private val valuesFlat = listOf(
+        5,
+        rnd.nextInt(2) + 3,
+        rnd.nextInt(3) + 2,
+        2,
+        rnd.nextInt(3) + 4,
+        rnd.nextInt(3) + 3,
+        rnd.nextInt(3) + 5,
+        rnd.nextInt(3) + 4,
+        rnd.nextInt(4) + 3,
+        rnd.nextInt(4) + 3,
+        rnd.nextInt(2) + 3,
+        rnd.nextInt(2) + 7,
+        5
+    ).map { it.toFloat() }.toFloatArray()
+
     private val values
-        get() = if (trader.profitPercentage > 0) valuesUp else valuesDown
+        get() = if (trader.profitPercentage > 0) valuesUp else if (trader.profitPercentage == 0) valuesFlat else valuesDown
 
     private lateinit var ttooltip: Tooltip
 
@@ -158,7 +174,7 @@ class TraderDetailsActivity : AppCompatActivity() {
                 } else {
                     rateLabel.visibility = View.VISIBLE
                     description.text =
-                            if (trader.profitPercentage > 0) "If you had trusted $availableToInvestMoney free money a month ago, now you would have had ${(availableToInvestMoney * trader.profitPercentage / 100)} \uD83E\uDD11"
+                            if (trader.profitPercentage > 0) "If you had trusted $availableToInvestMoney free money a month ago, now you would have had ${(availableToInvestMoney + (availableToInvestMoney * trader.profitPercentage / 100))} \uD83E\uDD11"
                             else "Next week will be better for them?"
                 }
             })

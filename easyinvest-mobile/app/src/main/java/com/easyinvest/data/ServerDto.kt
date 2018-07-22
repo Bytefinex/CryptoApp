@@ -19,7 +19,7 @@ data class SubscriptionDto(
 
 data class TraderDto(
     val id: String,
-    val username: String,
+    val name: String,
     val isFollowed: Boolean,
     val monthGrowth: Float,
     val followersCount: Int,
