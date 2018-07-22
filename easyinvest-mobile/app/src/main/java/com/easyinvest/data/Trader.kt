@@ -9,7 +9,8 @@ data class Trader(
     val profitPercentage: Int,
     val followersCount: Int,
     val followedByCurrentInvestor: Boolean,
-    val pricePerMonth: Float
+    val pricePerMonth: Float,
+    val subscriptionId: String? = null
 
     //TODO data for graphic
 ) : Serializable

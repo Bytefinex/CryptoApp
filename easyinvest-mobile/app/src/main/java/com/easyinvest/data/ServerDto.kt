@@ -23,7 +23,8 @@ data class TraderDto(
     val isFollowed: Boolean,
     val monthGrowth: Float,
     val followersCount: Int,
-    val dataBalances: List<DataBalanceDto>
+    val dataBalances: List<DataBalanceDto>,
+    val subscriptionId: String?
 )
 
 data class DataBalanceDto(

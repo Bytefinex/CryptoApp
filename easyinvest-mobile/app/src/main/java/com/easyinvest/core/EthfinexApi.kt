@@ -25,6 +25,6 @@ interface EthfinexApi {
     ): Completable
 
     @POST("/subscription/delete/{id}")
-    fun unfollow(@Path("id") traderId: String): Completable
+    fun unfollow(@Path("id") subscriptionId: String): Completable
 
 }
