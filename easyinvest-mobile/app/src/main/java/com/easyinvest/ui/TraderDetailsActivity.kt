@@ -153,9 +153,10 @@ class TraderDetailsActivity : AppCompatActivity() {
                 }
 
                 if (isFollowed) {
-                    description.text = if (trader.profitPercentage > 0) "Horray, your wealth are growing!" else "Sorry, looks like that week was not lucky!"
+                    description.text = if (trader.profitPercentage > 0) "You get richer \uD83D\uDCB0\uD83D\uDCB0\uD83D\uDCB0" else "Next week will be better!"
                 } else {
-                    description.text = if (trader.profitPercentage > 0) "Follow ${trader.name} and increase your money. If you have followed him month ago, you current ${availableToInvestMoney} would be ${(availableToInvestMoney * trader.profitPercentage / 100)}" else "Check this guy on the next week, I promise he will try harder!"
+                    description.text = if (trader.profitPercentage > 0) "If you had trusted $availableToInvestMoney free money a month ago, now you would have had ${(availableToInvestMoney * trader.profitPercentage / 100)} \uD83E\uDD11"
+                             else "Next week will be better for them?"
                 }
             })
 
