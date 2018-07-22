@@ -43,23 +43,5 @@ class TradersFragment : BaseFragment() {
                     showNoInternetToast()
                 })
         )
-
-        openTrader.setOnClickListener {
-            activity?.let {
-                startActivity(
-                        TraderDetailsActivity.getIntent(
-                                it,
-                                Trader(
-                                        "Michael Jordan",
-                                        "https://wallpaperbrowse.com/media/images/5725739-random-picture.jpg",
-                                        123,
-                                        300,
-                                        false,
-                                        10f
-                                )
-                        )
-                )
-            }
-        }
     }
 }
