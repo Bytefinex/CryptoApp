@@ -3,7 +3,6 @@ package com.easyinvest.ui
 import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Build
@@ -25,10 +24,8 @@ import com.db.chart.tooltip.Tooltip
 import com.db.chart.util.Tools
 import com.easyinvest.R
 import com.easyinvest.core.Feature
-import com.easyinvest.core.RetrofitService
 import com.easyinvest.data.Trader
 import com.easyinvest.util.showMonthlyPercent
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.dialog_follow.view.*
 import kotlinx.android.synthetic.main.trader_header.*
@@ -63,20 +60,57 @@ class TraderDetailsActivity : AppCompatActivity() {
 
     private val trader by lazy { fromIntent(intent) }
 
-    private val labels = arrayOf("Jan", "Fev", "Mar", "Apr", "Jun", "May", "Jul", "Aug", "Sep")
+    private val labels = arrayOf(
+        "Jan",
+        "Fev",
+        "Mar",
+        "Apr",
+        "Jun",
+        "May",
+        "Jul",
+        "Aug",
+        "Sep",
+        "May",
+        "Jul",
+        "Aug",
+        "Sep"
+    )
 
     private val rnd = Random()
-    private val values = listOf(
-        rnd.nextInt(5) + 3,
-        rnd.nextInt(3) + 3,
-        rnd.nextInt(2) + 2,
+    private val valuesUp = listOf(
+        rnd.nextInt(3) + 1,
+        rnd.nextInt(3) + 2,
+        rnd.nextInt(2) + 3,
         rnd.nextInt(4) + 4,
-        rnd.nextInt(3) + 3,
-        rnd.nextInt(4) + 3,
-        rnd.nextInt(5) + 3,
-        rnd.nextInt(5) + 4,
-        rnd.nextInt(5) + 3
+        rnd.nextInt(3) + 5,
+        rnd.nextInt(3) + 6,
+        rnd.nextInt(3) + 7,
+        rnd.nextInt(4) + 8,
+        rnd.nextInt(3) + 9,
+        rnd.nextInt(3) + 10,
+        rnd.nextInt(3) + 11,
+        rnd.nextInt(2) + 12,
+        rnd.nextInt(1) + 13
     ).map { it.toFloat() }.toFloatArray()
+
+    private val valuesDown = listOf(
+        rnd.nextInt(1) + 13,
+        rnd.nextInt(2) + 12,
+        rnd.nextInt(3) + 11,
+        rnd.nextInt(3) + 10,
+        rnd.nextInt(3) + 9,
+        rnd.nextInt(3) + 6,
+        rnd.nextInt(3) + 5,
+        rnd.nextInt(3) + 7,
+        rnd.nextInt(4) + 8,
+        rnd.nextInt(4) + 4,
+        rnd.nextInt(2) + 3,
+        rnd.nextInt(3) + 2,
+        rnd.nextInt(3) + 1
+    ).map { it.toFloat() }.toFloatArray()
+
+    private val values
+        get() = if (trader.profitPercentage > 0) valuesUp else valuesDown
 
     private lateinit var ttooltip: Tooltip
 
@@ -110,6 +144,12 @@ class TraderDetailsActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                }
+
+                if (isFollowed) {
+                    rateLabel.visibility = View.GONE
+                } else {
+                    rateLabel.visibility = View.VISIBLE
                 }
             })
 
@@ -159,20 +199,27 @@ class TraderDetailsActivity : AppCompatActivity() {
             ttooltip.pivotY = Tools.fromDpToPx(25f)
         }
 
+        val fillColor = ContextCompat.getColor(this, R.color.white)
+        val lineColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        val dotsColor = ContextCompat.getColor(this, R.color.white70)
+
         // Data
         var dataset = LineSet(labels, values)
-        dataset.setColor(Color.parseColor("#758cbb"))
-            .setFill(Color.parseColor("#9C152949"))
-            .setDotsColor(Color.parseColor("#758cbb"))
+        dataset.setColor(lineColor)
+            .setSmooth(true)
+            .setDotsRadius(4f)
+            .setDotsColor(dotsColor)
+            .setGradientFill(intArrayOf(fillColor, lineColor), null)
             .setThickness(4f)
-            .setDashed(floatArrayOf(10f, 10f))
             .beginAt(5)
         chart.addData(dataset)
 
         dataset = LineSet(labels, values)
-        dataset.setColor(Color.parseColor("#b3b5bb"))
-            .setFill(Color.parseColor("#9C152949"))
-            .setDotsColor(Color.parseColor("#ffc755"))
+        dataset.setColor(lineColor)
+            .setGradientFill(intArrayOf(fillColor, lineColor), null)
+            .setSmooth(true)
+            .setDotsRadius(4f)
+            .setDotsColor(dotsColor)
             .setThickness(4f)
             .endAt(6)
         chart.addData(dataset)
@@ -215,10 +262,11 @@ class TraderDetailsActivity : AppCompatActivity() {
 
         view.amountOfInvestment.text = "$minToInvest\$"
         view.followDialogSeekBarAmount.max = availableToInvestMoney
+        view.followDialogSeekBarAmount.progress = if (minToInvest > 50) minToInvest else 50
         view.followDialogSeekBarAmount.setOnSeekBarChangeListener(object :
             SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val MIN = minToInvest
+                val MIN = 50
 
                 if (fromUser) {
                     view.amountOfInvestment.text = "${if (progress < MIN) {

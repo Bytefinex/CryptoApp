@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#0076E4</color>
+    <color name="colorPrimaryLight">#6fb9ff</color>
     <color name="colorPrimaryDark">#005cb3</color>
     <color name="colorAccent">#EA2B8D</color>
     <color name="green">#A1C26E</color>
     <color name="portfolioBackground">#EBECEE</color>
-    <color name="red">#a60707</color>
+    <color name="red">#96c23333</color>
 </resources>
