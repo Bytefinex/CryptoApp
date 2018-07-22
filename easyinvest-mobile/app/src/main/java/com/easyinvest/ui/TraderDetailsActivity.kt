@@ -77,54 +77,59 @@ class TraderDetailsActivity : AppCompatActivity() {
         "Sep"
     )
 
-    private val rnd = Random()
-    private val valuesUp = listOf(
-        rnd.nextInt(3) + 1,
-        rnd.nextInt(3) + 2,
-        rnd.nextInt(2) + 3,
-        rnd.nextInt(4) + 4,
-        rnd.nextInt(3) + 5,
-        rnd.nextInt(3) + 6,
-        rnd.nextInt(3) + 7,
-        rnd.nextInt(4) + 8,
-        rnd.nextInt(3) + 9,
-        rnd.nextInt(3) + 10,
-        rnd.nextInt(3) + 11,
-        rnd.nextInt(2) + 12,
-        rnd.nextInt(1) + 13
-    ).map { it.toFloat() }.toFloatArray()
+    private val rnd by lazy { Random(trader.id.toLong()) }
+    private val valuesUp by lazy {
+        listOf(
+            rnd.nextInt(3) + 1,
+            rnd.nextInt(3) + 2,
+            rnd.nextInt(2) + 3,
+            rnd.nextInt(4) + 4,
+            rnd.nextInt(3) + 5,
+            rnd.nextInt(3) + 6,
+            rnd.nextInt(3) + 7,
+            rnd.nextInt(4) + 8,
+            rnd.nextInt(3) + 9,
+            rnd.nextInt(3) + 10,
+            rnd.nextInt(3) + 11,
+            rnd.nextInt(2) + 12,
+            rnd.nextInt(1) + 13
+        ).map { it.toFloat() }.toFloatArray()
+    }
+    private val valuesDown by lazy {
+        listOf(
+            rnd.nextInt(1) + 13,
+            rnd.nextInt(2) + 12,
+            rnd.nextInt(3) + 11,
+            rnd.nextInt(3) + 10,
+            rnd.nextInt(3) + 9,
+            rnd.nextInt(3) + 6,
+            rnd.nextInt(3) + 5,
+            rnd.nextInt(3) + 7,
+            rnd.nextInt(4) + 8,
+            rnd.nextInt(4) + 4,
+            rnd.nextInt(2) + 3,
+            rnd.nextInt(3) + 2,
+            rnd.nextInt(3) + 1
+        ).map { it.toFloat() }.toFloatArray()
+    }
 
-    private val valuesDown = listOf(
-        rnd.nextInt(1) + 13,
-        rnd.nextInt(2) + 12,
-        rnd.nextInt(3) + 11,
-        rnd.nextInt(3) + 10,
-        rnd.nextInt(3) + 9,
-        rnd.nextInt(3) + 6,
-        rnd.nextInt(3) + 5,
-        rnd.nextInt(3) + 7,
-        rnd.nextInt(4) + 8,
-        rnd.nextInt(4) + 4,
-        rnd.nextInt(2) + 3,
-        rnd.nextInt(3) + 2,
-        rnd.nextInt(3) + 1
-    ).map { it.toFloat() }.toFloatArray()
-
-    private val valuesFlat = listOf(
-        5,
-        rnd.nextInt(2) + 3,
-        rnd.nextInt(3) + 2,
-        2,
-        rnd.nextInt(3) + 4,
-        rnd.nextInt(3) + 3,
-        rnd.nextInt(3) + 5,
-        rnd.nextInt(3) + 4,
-        rnd.nextInt(4) + 3,
-        rnd.nextInt(4) + 3,
-        rnd.nextInt(2) + 3,
-        rnd.nextInt(2) + 7,
-        5
-    ).map { it.toFloat() }.toFloatArray()
+    private val valuesFlat by lazy {
+        listOf(
+            5,
+            rnd.nextInt(2) + 3,
+            rnd.nextInt(3) + 2,
+            2,
+            rnd.nextInt(3) + 4,
+            rnd.nextInt(3) + 3,
+            rnd.nextInt(3) + 5,
+            rnd.nextInt(3) + 4,
+            rnd.nextInt(4) + 3,
+            rnd.nextInt(4) + 3,
+            rnd.nextInt(2) + 3,
+            rnd.nextInt(2) + 7,
+            5
+        ).map { it.toFloat() }.toFloatArray()
+    }
 
     private val values
         get() = if (trader.profitPercentage > 0) valuesUp else if (trader.profitPercentage == 0) valuesFlat else valuesDown
