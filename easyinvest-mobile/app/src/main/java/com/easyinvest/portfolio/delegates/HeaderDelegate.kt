@@ -5,8 +5,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.easyinvest.R
-import com.easyinvest.portfolio.items.HeaderItem
 import com.easyinvest.base.DisplayableItem
+import com.easyinvest.portfolio.items.HeaderItem
+import com.easyinvest.util.colorifyProfit
 import com.hannesdorfmann.adapterdelegates3.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_portfolio_header.*
@@ -26,7 +27,7 @@ class HeaderDelegate(activity: Activity) : AbsListItemAdapterDelegate<HeaderItem
     class HeaderViewHolder(override val containerView: View?) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         fun bind(item: HeaderItem) {
             totalAmountView.text = item.totalAmount
-            extraAmountView.text = item.extraAmount
+            colorifyProfit(extraAmountView, extraAmountImage, isPositive = item.extraAmountValue >= 0, displayText = item.extraAmount)
         }
     }
 

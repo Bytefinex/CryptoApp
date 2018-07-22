@@ -11,21 +11,33 @@
         android:id="@+id/totalAmountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="153 333,67" />
 
+    <ImageView
+        android:id="@+id/extraAmountImage"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/extraAmountView"
+        app:layout_constraintEnd_toStartOf="@id/extraAmountView"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/extraAmountView"
+        tools:src="@drawable/ic_dashboard_black_24dp" />
+
     <TextView
         android:id="@+id/extraAmountView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
         android:text="23 421,98"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/extra_amount_text_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/extraAmountImage"
         app:layout_constraintTop_toBottomOf="@+id/totalAmountView" />
 
 </android.support.constraint.ConstraintLayout>

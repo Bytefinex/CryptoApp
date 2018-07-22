@@ -75,7 +75,8 @@ object Feature {
         return listOf(
                 HeaderItem(
                         totalAmount = "\$${portfolioDto.totalMoney}",
-                        extraAmount = "\$${portfolioDto.totalMoney - portfolioDto.startMoney}"
+                        extraAmount = "\$${portfolioDto.totalMoney - portfolioDto.startMoney}",
+                        extraAmountValue = portfolioDto.totalMoney - portfolioDto.startMoney
                 ),
                 SectionHeaderItem(title = "Ready for investments"),
                 //                TraderItem(id = "5", name = "Ethereum", totalAmount = "10,77", extraAmount = "1,14", forcedAvatar = "https://ih1.redbubble.net/image.358612536.1165/flat,550x550,075,f.jpg"),
