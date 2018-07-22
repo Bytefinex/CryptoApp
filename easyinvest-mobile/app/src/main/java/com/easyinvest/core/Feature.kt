@@ -35,7 +35,8 @@ object Feature {
                                     id = it.userFollowedId,
                                     name = it.trader.username,
                                     totalAmount = it.totalMoney,
-                                    extraAmount = it.totalMoney - it.moneyAllocated
+                                    extraAmount = it.totalMoney - it.moneyAllocated,
+                                    subscriptionId = it.trader.subscriptionId
                             )
                         } ?: emptyList())
                     }
@@ -94,7 +95,7 @@ object Feature {
     fun getPopularTraders(): Single<List<PopularTraderItem>> =
         RetrofitService.api.traders()
             .map {
-                it.map { PopularTraderItem(TraderItem(it.id, it.username, 0f, null), it.monthGrowth.toInt()) }
+                it.map { PopularTraderItem(TraderItem(it.id, it.username, 0f, null, subscriptionId = it.subscriptionId), it.monthGrowth.toInt()) }
             }
             .observeOn(AndroidSchedulers.mainThread())
 
@@ -115,8 +116,8 @@ object Feature {
             subject.map { it.subscription.any { it.trader.id == traiderId } }
                     .observeOn(AndroidSchedulers.mainThread())
 
-    fun unfollow(traderId: String) {
-        RetrofitService.api.unfollow(traderId = traderId)
+    fun unfollow(subscriptionId: String?) {
+        RetrofitService.api.unfollow(subscriptionId ?: "")
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete { refresh() }
             .onErrorComplete()

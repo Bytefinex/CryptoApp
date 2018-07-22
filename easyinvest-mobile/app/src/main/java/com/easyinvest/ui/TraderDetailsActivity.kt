@@ -142,7 +142,7 @@ class TraderDetailsActivity : AppCompatActivity() {
                             "${trader.name} has been unfollowed!",
                             Toast.LENGTH_SHORT
                         ).show()
-                        Feature.unfollow(trader.id)
+                        Feature.unfollow(trader.subscriptionId)
                     } else {
                         showBottomDialog()
                     }

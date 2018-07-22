@@ -10,7 +10,8 @@ data class TraderItem(
     val name: String,
     val totalAmount: Float,
     val extraAmount: Float?,
-    val forcedAvatar: String? = null
+    val forcedAvatar: String? = null,
+    val subscriptionId: String? = null
 ) : DisplayableItem {
 
     private val avatarSource = "https://randomuser.me/api/portraits/men/%d.jpg"
@@ -31,7 +32,8 @@ data class TraderItem(
             profitPercentage = percentage,
             pricePerMonth = 10f,
             followersCount = 334,
-            followedByCurrentInvestor = true
+            followedByCurrentInvestor = true,
+            subscriptionId = subscriptionId
         )
     }
 }
