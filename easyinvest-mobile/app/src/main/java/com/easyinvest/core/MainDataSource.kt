@@ -16,7 +16,7 @@ object MainDataSource {
                     listOf(
                             HeaderItem(totalAmount = "\$10 376,76", extraAmount = "\$1 500,61"),
                             SectionHeaderItem(title = "Following"),
-                            TraderItem(id = "1", name = "John Doe", totalAmount = 1088.97f, extraAmount = 54.16f),
+                            TraderItem(id = "1", name = "John Doe", totalAmount = 1088.97f, extraAmount = -54.16f),
                             TraderItem(id = "2", name = "Apple Seed", totalAmount = 1031.86f, extraAmount = 15.32f),
                             TraderItem(id = "3", name = "Vitalik Buterin", totalAmount = 1305.96f, extraAmount = 304.83f),
                             TraderItem(id = "4", name = "Satoshi Nakamoto", totalAmount = 3088.96f, extraAmount = 808.14f),

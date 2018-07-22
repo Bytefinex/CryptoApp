@@ -98,7 +98,7 @@ class TraderDetailsActivity : AppCompatActivity() {
             .apply(RequestOptions.circleCropTransform())
             .into(avatar)
 
-        profit.showMonthlyPercent(trader, this)
+        profit.showMonthlyPercent(trader.profitPercentage, this)
 
         profitPerMonth.visibility = if (trader.followedByCurrentInvestor) {
             View.GONE
